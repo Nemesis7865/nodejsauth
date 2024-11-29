@@ -25,6 +25,7 @@ router.post("/register", (req, res) => {
   if (password.length < 6) {
     errors.push({ msg: "Password must be at least 6 characters" });
   }
+ 
 
   // Render errors if any
   if (errors.length > 0) {
@@ -90,6 +91,15 @@ router.post('/login', (req, res) => {
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res);
+})
+
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+  }})
+  req.flash('You are logged out');
+  res.redirect('/users/login');
 })
 
 module.exports = router;
